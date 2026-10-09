@@ -1,0 +1,29 @@
+services:
+  mysql:
+    image: mysql:8.0.39
+    container_name: tdt4225-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: porto
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: test123
+      TZ: UTC
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command:
+      - --innodb-buffer-pool-size=2G      # dataset is ~1.9 GB CSV; speeds up bulk inserts/queries
+      - --max-allowed-packet=256M         # large executemany batches / long POLYLINE strings
+      - --local-infile=1                  # allows LOAD DATA LOCAL INFILE if needed
+      - --disable-log-bin                 # no binary log: rows aren't written twice during the bulk load
+      - --innodb-flush-log-at-trx-commit=2  # don't fsync on every commit
+      - --innodb-redo-log-capacity=2G     # default 100M causes constant flushing on big loads
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      retries: 20
+
+volumes:
+  mysql_data:
