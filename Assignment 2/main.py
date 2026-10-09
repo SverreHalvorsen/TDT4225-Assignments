@@ -12,7 +12,7 @@ from tabulate import tabulate
 
 LINE_SEPERATOR = "-" * 50
 
-# Written by Clean.ipynb; TIMESTAMP is already converted to Porto local time there
+# Written by Clean.ipynb; TIMESTAMP is already converted to Porto local time there.
 CLEAN_DATA_PATH = "porto/clean.parquet"
 TRIPS_LOAD_PATH = os.path.abspath("porto/trips_load.csv")
 POINTS_LOAD_PATH = os.path.abspath("porto/points_load.csv")
