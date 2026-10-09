@@ -33,7 +33,6 @@ TRIP_FIELDS = {
     "call_type": "CHAR(1) NOT NULL",
     "origin_call": "INT",
     "origin_stand": "INT",
-    "missing_data": "BOOLEAN NOT NULL",
     "start_time": "DATETIME NOT NULL",
     "number_of_points": "INT NOT NULL",
     "distance_km": "DOUBLE NOT NULL",
@@ -203,7 +202,7 @@ def write_load_files(df: pd.DataFrame):
             trip_writer.writerow([row.TRIP_ID, row.TAXI_ID, row.CALL_TYPE,
                                   r"\N" if pd.isna(row.ORIGIN_CALL) else row.ORIGIN_CALL,
                                   r"\N" if pd.isna(row.ORIGIN_STAND) else row.ORIGIN_STAND,
-                                  int(row.MISSING_DATA), row.TIMESTAMP, len(latlon), distance])
+                                  row.TIMESTAMP, len(latlon), distance])
             point_writer.writerows((row.TRIP_ID, i, lat, lon) for i, (lat, lon) in enumerate(latlon))
 
     os.replace(trips_tmp, TRIPS_LOAD_PATH)
