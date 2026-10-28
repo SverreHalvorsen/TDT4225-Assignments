@@ -19,7 +19,7 @@ ENV/
 .env.*
 !.env.example
 
-# Generated/local data
+# Generated/local data.
 *.parquet
 porto/
 data/
