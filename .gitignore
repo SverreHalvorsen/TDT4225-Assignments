@@ -21,7 +21,8 @@ ENV/
 
 # Generated/local data
 *.parquet
-porto/*.csv
+*.pkl
+**/porto/
 
 # Docker persistent volumes
 mysql_data/
