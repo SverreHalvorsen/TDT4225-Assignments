@@ -124,7 +124,7 @@ def task_five(program: DatabaseManager):
             "median_runtime": {"$median": {"input": "$runtime", "method": "approximate"}},
             "movie_count": {"$sum": 1}
         }},
-        {"$sort": {"_id.decade": 1, "movie_count": -1}}
+        {"$sort": {"_id.decade": 1, "median_runtime": -1}}
 
     ]))
 
@@ -176,7 +176,6 @@ def task_seven(program: DatabaseManager):
 def task_eight(program: DatabaseManager):
     print("Task 8: Top 20 director-actor pairs with 3+ movies (100+ votes) by mean vote_average\n")
 
-    # TODO: revenue == 0 lowers mean_revenue, same as task 1; revisit once the data is cleaned
     return list(program.db.movies.aggregate([
         {"$match": {"vote_count": {"$gte": 100}}},
         {"$project": {
