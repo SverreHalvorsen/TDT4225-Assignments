@@ -1,0 +1,24 @@
+services:
+  mongodb:
+    image: mongo:7.0.1
+    container_name: tdt4225-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      TZ: UTC
+    ports:
+      - "127.0.0.1:27017:27017"           # local only
+    volumes:
+      - mongodb_data:/data/db
+    command:
+      - --wiredTigerCacheSizeGB=2         # ratings.csv is 26M rows; keeps the working set in memory
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "-u", "root", "-p", "root",
+             "--authenticationDatabase", "admin",
+             "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      retries: 20
+
+volumes:
+  mongodb_data:
