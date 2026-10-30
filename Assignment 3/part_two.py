@@ -62,6 +62,7 @@ def task_two(program: DatabaseManager):
     ]
     result.sort(key=lambda x: (-x["co_appearances"], -(x["avg_vote_average"] or 0)))
 
+    print(f"{len(result):,} pairs with 3+ movies together, showing the top 10\n")
     return result[:10]
 
 def task_three(program: DatabaseManager):
