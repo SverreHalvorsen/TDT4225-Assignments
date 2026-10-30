@@ -2,7 +2,7 @@ from collections import defaultdict
 from itertools import combinations
 from pprint import pprint
 
-from main import DatabaseManager
+from DatabaseManagement import DatabaseManager
 
 
 def task_one(program: DatabaseManager):
